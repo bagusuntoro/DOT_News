@@ -1,66 +1,49 @@
 import React, { useState } from 'react';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Menu, Button } from 'antd';
 
-const items: MenuProps['items'] = [
+type MenuItemType = {
+  label: string;
+  key: string;
+  // icon: JSX.Element;
+};
+type MenuItemWithGroupType = MenuItemType;
+
+const items: Array<MenuItemWithGroupType> = [
   {
-    label: 'Navigation One',
+    label: 'HOME',
     key: 'mail',
-    icon: <MailOutlined />,
+    // icon: <MailOutlined />,
   },
   {
-    label: 'Navigation Two',
-    key: 'app',
-    icon: <AppstoreOutlined />,
-    disabled: true,
+    label: 'NEWS',
+    key: 'news',
+    // icon: <AppstoreOutlined />,
   },
   {
-    label: 'Navigation Three - Submenu',
-    key: 'SubMenu',
-    icon: <SettingOutlined />,
-    children: [
-      {
-        type: 'group',
-        label: 'Item 1',
-        children: [
-          {
-            label: 'Option 1',
-            key: 'setting:1',
-          },
-          {
-            label: 'Option 2',
-            key: 'setting:2',
-          },
-        ],
-      },
-      {
-        type: 'group',
-        label: 'Item 2',
-        children: [
-          {
-            label: 'Option 3',
-            key: 'setting:3',
-          },
-          {
-            label: 'Option 4',
-            key: 'setting:4',
-          },
-        ],
-      },
-    ],
+    label: 'EVENT',
+    key: 'event',
+    // icon: <AppstoreOutlined />,
   },
   {
-    label: (
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        Navigation Four - Link
-      </a>
-    ),
-    key: 'alipay',
+    label: 'HC CORNER',
+    key: 'hc',
+    // icon: <AppstoreOutlined />,
   },
+  {
+    label: 'ADMIN PANEL',
+    key: 'admin',
+    // icon: <AppstoreOutlined />,
+  },
+  // {
+  // label: 'SEARCH NEWS',
+  // key: 'search',
+  // icon: <AppstoreOutlined />,
+  // },
 ];
 
-const navigation: React.FC = () => {
+const Navigation: React.FC = () => {
   const [current, setCurrent] = useState('mail');
 
   const onClick: MenuProps['onClick'] = (e) => {
@@ -68,7 +51,50 @@ const navigation: React.FC = () => {
     setCurrent(e.key);
   };
 
-  return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
+  return (
+    <>
+      <Menu
+        onClick={onClick}
+        selectedKeys={[current]}
+        mode="horizontal"
+        style={{
+          height: '100px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#1D3244',
+          paddingLeft: '100px',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="/images/DOTLogo.png" alt="logo DOT" width={100} height={50} style={{ margin: 'auto' }} />
+          <h2 style={{ color: 'green', marginRight: '100px' }}>NEWS</h2>
+          {items.map((item) => {
+            return (
+              <Menu.Item
+                key={item.key}
+                style={{
+                  margin: 'auto',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  backgroundColor: '#1D3244',
+                  color: 'white'
+                }}
+              >
+                <span>{item.label}</span>
+              </Menu.Item>
+            );
+          })}
+        </div>
+        <Button type="primary" icon={<SearchOutlined />} style={{ margin: 'auto', backgroundColor: 'green' }}>
+          Search News
+        </Button>
+      </Menu >
+    </>
+  );
 };
 
-export default navigation;
+export default Navigation;
